@@ -1,0 +1,27 @@
+name: APK_Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build with Website-2-APK
+        uses: subhamtyagi/website-2-apk-action@v1.4.0
+        with:
+          app_name: 'ACR Security'
+          url: 'file:///github/workspace/index.html'
+          output_name: 'ACR_Security_v1.apk'
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: ACR_Uygulamam
+          path: ./*.apk
